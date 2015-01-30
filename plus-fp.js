@@ -1,17 +1,22 @@
-var fp = require('lodash-fp');
-
-exports.anyOf = fp.curry(function(arr, w)
+(function()
 {
-    return fp.any(function(f)
-    {
-        return f(w);
-    }, arr);
-});
+    "use strict";
 
-exports.allOf = fp.curry(function(arr, w)
-{
-    return fp.all(function(f)
+    var fp = require('lodash-fp');
+
+    exports.anyOf = fp.curry(function(arr, w)
     {
-        return f(w);
-    }, arr);
-});
+        return fp.any(function(f)
+        {
+            return f(w);
+        }, arr);
+    });
+
+    exports.allOf = fp.curry(function(arr, w)
+    {
+        return fp.all(function(f)
+        {
+            return f(w);
+        }, arr);
+    });
+})();
