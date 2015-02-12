@@ -24,20 +24,16 @@
     });
 
     // pick a random property
-    exports.pickRandom = fp.curry(function(x)
+    exports.pickRandomKey = fp.curry(function(x)
     {
         var key = math.pickRandom(fp.keys(x));
-        var val = x[key];
+        return key;
+    });
 
-        // return property name in object
-
-        if (/object|function/.test(val))
-        {
-            val.key = key;
-        }
-
-        return val;
-
+    // pick a random property
+    exports.pickRandom = fp.curry(function(x)
+    {
+        return x[exports.pickRandomKey(x)];
     });
 
 })();
