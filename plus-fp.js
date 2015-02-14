@@ -23,7 +23,7 @@
         }, arr);
     });
 
-    // pick a weighted random
+    // pick a weighted random item
     exports.wandom = fp.curry(function(vec)
     {
         // if array objects have a weight property, use it
@@ -65,6 +65,7 @@
         else
         {
             // no weights
+
             pick = math.pickRandom(vec);
         }
 
