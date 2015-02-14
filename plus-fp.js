@@ -23,24 +23,10 @@
         }, arr);
     });
 
-    // pick a random property
-    exports.pickRandomKey = fp.curry(function(x)
-    {
-        var key = math.pickRandom(fp.keys(x));
-        return key;
-    });
-
-    // pick a random property
-    exports.pickRandom = fp.curry(function(x)
-    {
-        return x[exports.pickRandomKey(x)];
-    });
-
     // pick a weighted random
     exports.wandom = fp.curry(function(vec)
     {
         // if array objects have a weight property, use it
-
 
         var pick;
 
@@ -56,16 +42,15 @@
 
             if (sum)
             {
-
+                // convert each to 0..1
                 var probs = fp.map(function(w)
                 {
                     return w / sum;
                 }, weights);
 
-        debugger;
-
                 var r = math.random(0, 1);
 
+                // find where cumulative sum exceeds r
                 var rsum = 0;
                 var i = -1;
 
@@ -76,9 +61,15 @@
 
                 pick = vec[i];
             }
-
-            return pick;
         }
+        else
+        {
+            // no weights
+            pick = math.pickRandom(vec);
+        }
+
+        return pick;
+
     });
 
 })();
