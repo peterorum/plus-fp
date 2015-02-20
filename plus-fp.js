@@ -73,4 +73,46 @@
 
     });
 
+    // biased random
+    // larger n means small result (0..1)
+    // -ve n -> larger result (0..1)
+
+    exports.bandom = fp.curry(function(max, n)
+    {
+        var r = math.random(max);
+
+        var m = math.abs(n);
+
+        while(--m > 0)
+        {
+            r = math.random(r);
+        }
+
+        if (n < 0)
+        {
+            r = 1 - r;
+        }
+
+        return r;
+    });
+
+    exports.bandomInt = fp.curry(function(max, n)
+    {
+        var r = math.randomInt(max);
+
+        var m = math.abs(n);
+
+        while(--m > 0)
+        {
+            r = math.randomInt(r);
+        }
+
+        if (n < 0)
+        {
+            r = max - 1 - r;
+        }
+
+        return r;
+    });
+
 })();
