@@ -115,14 +115,6 @@
         return r;
     });
 
-    // takes an array of functions and chains them
-    // if no functions, just return arg
-
-    exports.flowAll = fp.curry(function(vec, x)
-    {
-        return vec.length ? fp.flow.apply(this, vec)(x) : x;
-    });
-
     exports.nameOf = function(fn)
     {
         // http://stackoverflow.com/questions/2648293/javascript-get-function-name
