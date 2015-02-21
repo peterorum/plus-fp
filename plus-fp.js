@@ -83,7 +83,7 @@
 
         var m = math.abs(n);
 
-        while(--m > 0)
+        while (--m > 0)
         {
             r = math.random(r);
         }
@@ -102,7 +102,7 @@
 
         var m = math.abs(n);
 
-        while(--m > 0)
+        while (--m > 0)
         {
             r = math.randomInt(r);
         }
@@ -115,4 +115,20 @@
         return r;
     });
 
+    // takes an array of functions and chains them
+    exports.flowAll = fp.curry(function(vec, x)
+    {
+        return fp.flow.apply(this, vec)(x);
+    });
+
+    exports.nameOf = function(fn)
+    {
+        // http://stackoverflow.com/questions/2648293/javascript-get-function-name
+
+        var ret = fn.toString();
+        ret = ret.substr('function '.length);
+        ret = ret.substr(0, ret.indexOf('('));
+
+        return ret;
+    };
 })();
