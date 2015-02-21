@@ -133,4 +133,9 @@
 
         return ret;
     };
+
+    exports.randomSign = function()
+    {
+        return math.random(1) < 0.5 ? -1 : 1;
+    };
 })();
