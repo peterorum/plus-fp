@@ -116,6 +116,8 @@
     });
 
     // takes an array of functions and chains them
+    // if no functions, just return arg
+
     exports.flowAll = fp.curry(function(vec, x)
     {
         return vec.length ? fp.flow.apply(this, vec)(x) : x;
