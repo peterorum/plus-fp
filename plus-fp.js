@@ -118,7 +118,7 @@
     // takes an array of functions and chains them
     exports.flowAll = fp.curry(function(vec, x)
     {
-        return fp.flow.apply(this, vec)(x);
+        return vec.length ? fp.flow.apply(this, vec)(x) : x;
     });
 
     exports.nameOf = function(fn)
