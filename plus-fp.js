@@ -32,6 +32,11 @@
 
         if (vec.length && fp.has('weight', vec[0]))
         {
+            if (fp.pluck('weight', vec).length !== vec.length)
+            {
+                throw "wandom: Not all elments have weight";
+            }
+
             var weights = fp.pluck('weight', vec);
 
             // sum the weights to normalize them
