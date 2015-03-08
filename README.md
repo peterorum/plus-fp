@@ -1,3 +1,3 @@
 # plus-fp
 
-Some extra functions for lodash-fp
+Some extra functions for functional programming

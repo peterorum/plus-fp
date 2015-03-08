@@ -2,45 +2,27 @@
 {
     "use strict";
 
-    var fp = require('lodash-fp');
+    var R = require('ramda');
     var math = require('mathjs');
 
-    // returns true if any predicates is true
-    exports.anyOf = fp.curry(function(arr, w)
-    {
-        return fp.any(function(f)
-        {
-            return f(w);
-        }, arr);
-    });
-
-    // returns true if all predicates are true
-    exports.allOf = fp.curry(function(arr, w)
-    {
-        return fp.all(function(f)
-        {
-            return f(w);
-        }, arr);
-    });
-
     // pick a weighted random item
-    exports.wandom = fp.curry(function(vec)
+    exports.wandom = R.curry(function(vec)
     {
         // if array objects have a weight property, use it
 
         var pick;
 
-        if (vec.length && fp.has('weight', vec[0]))
+        if (vec.length && R.has('weight', vec[0]))
         {
-            if (fp.pluck('weight', vec).length !== vec.length)
+            if (R.pluck('weight', vec).length !== vec.length)
             {
                 throw "wandom: Not all elments have weight";
             }
 
-            var weights = fp.pluck('weight', vec);
+            var weights = R.pluck('weight', vec);
 
             // sum the weights to normalize them
-            var sum = fp.reduce(function(sum, n)
+            var sum = R.reduce(function(sum, n)
             {
                 return sum + n;
             }, 0, weights);
@@ -48,7 +30,7 @@
             if (sum)
             {
                 // convert each to 0..1
-                var probs = fp.map(function(w)
+                var probs = R.map(function(w)
                 {
                     return w / sum;
                 }, weights);
@@ -82,7 +64,7 @@
     // larger n means small result (0..1)
     // -ve n -> larger result (0..1)
 
-    exports.bandom = fp.curry(function(max, n)
+    exports.bandom = R.curry(function(max, n)
     {
         var r = math.random(max);
 
@@ -101,7 +83,7 @@
         return r;
     });
 
-    exports.bandomInt = fp.curry(function(max, n)
+    exports.bandomInt = R.curry(function(max, n)
     {
         var r = math.randomInt(max);
 
