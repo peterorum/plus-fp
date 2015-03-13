@@ -68,6 +68,8 @@
     {
         var r = math.random(max);
 
+        n = n || 1;
+
         var m = math.abs(n);
 
         while (--m > 0)
@@ -86,6 +88,8 @@
     exports.bandomInt = R.curry(function(max, n)
     {
         var r = math.randomInt(max);
+
+        n = n || 1;
 
         var m = math.abs(n);
 
