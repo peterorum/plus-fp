@@ -79,7 +79,7 @@
 
         if (n < 0)
         {
-            r = 1 - r;
+            r = max - r;
         }
 
         return r;
