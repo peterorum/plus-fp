@@ -5,58 +5,66 @@
     var R = require('ramda');
     var math = require('mathjs');
 
-    // pick a weighted random item
     exports.wandom = R.curry(function(vec)
     {
+        return exports.wandomExcept([], vec);
+    });
+
+    // pick a weighted random item
+    exports.wandomExcept = R.curry(function(except, vec)
+    {
         // if array objects have a weight property, use it
+        // does not choose those in except, an array of indexes
 
         var pick;
 
-        if (vec.length && R.has('weight', vec[0]))
-        {
-            if (R.pluck('weight', vec).length !== vec.length)
+        do {
+            if (vec.length && R.has('weight', vec[0]))
             {
-                throw "wandom: Not all elments have weight";
-            }
-
-            var weights = R.pluck('weight', vec);
-
-            // sum the weights to normalize them
-            var sum = R.reduce(function(sum, n)
-            {
-                return sum + n;
-            }, 0, weights);
-
-            if (sum)
-            {
-                // convert each to 0..1
-                var probs = R.map(function(w)
+                if (R.pluck('weight', vec).length !== vec.length)
                 {
-                    return w / sum;
-                }, weights);
+                    throw "wandom: Not all elments have weight";
+                }
 
-                var r = math.random(0, 1);
+                var weights = R.pluck('weight', vec);
 
-                // find where cumulative sum exceeds r
-                var rsum = 0;
-                var i = -1;
+                // sum the weights to normalize them
+                var sum = R.reduce(function(sum, n)
+                {
+                    return sum + n;
+                }, 0, weights);
 
-                do {
-                    i += 1;
-                    rsum += probs[i];
-                } while (rsum <= r && i < vec.length - 1);
+                if (sum)
+                {
+                    // convert each to 0..1
+                    var probs = R.map(function(w)
+                    {
+                        return w / sum;
+                    }, weights);
 
-                pick = vec[i];
+                    var r = math.random(0, 1);
+
+                    // find where cumulative sum exceeds r
+                    var rsum = 0;
+                    var i = -1;
+
+                    do {
+                        i += 1;
+                        rsum += probs[i];
+                    } while (rsum <= r && i < vec.length - 1);
+
+                    pick = i;
+                }
             }
-        }
-        else
-        {
-            // no weights
+            else
+            {
+                // no weights
 
-            pick = math.pickRandom(vec);
-        }
+                pick = math.randomInt(vec.length);
+            }
+        } while (except.indexOf(pick) >= 0);
 
-        return pick;
+        return vec[pick];
 
     });
 
